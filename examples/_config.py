@@ -37,7 +37,11 @@ def _load_dotenv() -> None:
 
 
 def is_mock_mode() -> bool:
-    return os.environ.get("TRULAYER_DEMO_MOCK", "").lower() in ("1", "true", "yes")
+    for key in ("TRULAYER_DRY_RUN", "TRULAYER_DEMO_MOCK"):
+        val = os.environ.get(key, "").lower()
+        if val in ("1", "true", "yes"):
+            return True
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -59,7 +63,7 @@ def init_client() -> trulayer.TruLayerClient:
     client = trulayer.init(
         api_key=os.environ.get("TRULAYER_API_KEY", "tl_demo"),
         project_name=_project_name(),
-        endpoint=os.environ.get("TRULAYER_ENDPOINT", "http://127.0.0.1:8080"),
+        endpoint=os.environ.get("TRULAYER_ENDPOINT", "https://api.trulayer.ai"),
         flush_interval=0.2,
     )
     # The batch sender starts its event loop on a background thread. Wait
@@ -194,3 +198,26 @@ def build_anthropic_client() -> Any:
             "or set TRULAYER_DEMO_MOCK=1 for offline mode."
         )
     return anthropic.Anthropic(api_key=key)
+
+
+# ---------------------------------------------------------------------------
+# Async provider clients (for async_example.py)
+# ---------------------------------------------------------------------------
+
+def build_async_openai_client() -> Any:
+    """Return an `openai.AsyncOpenAI` instance -- real or mock-transport."""
+    import openai
+
+    if is_mock_mode():
+        return openai.AsyncOpenAI(
+            api_key="sk-demo-mock",
+            http_client=httpx.AsyncClient(transport=httpx.MockTransport(_openai_mock_handler)),
+        )
+
+    key = os.environ.get("OPENAI_API_KEY")
+    if not key:
+        raise RuntimeError(
+            "OPENAI_API_KEY is not set. Put it in `.env` or export it, "
+            "or set TRULAYER_DEMO_MOCK=1 for offline mode."
+        )
+    return openai.AsyncOpenAI(api_key=key)

@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out demo-python
+        uses: actions/checkout@v4
+        with:
+          path: demo-python
+
+      # The demo repo installs the `trulayer` SDK via a sibling editable path
+      # (`../client-python`) until the SDK is published to PyPI. Check the SDK
+      # out alongside this repo so `uv sync` can resolve it. Once the package
+      # is on PyPI, drop this step and switch `pyproject.toml` to a version
+      # specifier.
+      - name: Check out client-python (SDK source)
+        uses: actions/checkout@v4
+        with:
+          repository: trulayer/client-python
+          path: client-python
+          token: ${{ secrets.CLIENT_PYTHON_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        working-directory: demo-python
+        run: uv sync --dev
+
+      - name: Run smoke tests (dry-run mode)
+        working-directory: demo-python
+        env:
+          TRULAYER_DRY_RUN: "true"
+        run: uv run pytest tests/

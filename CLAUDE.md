@@ -49,3 +49,7 @@ pyproject.toml
 - Mocked OpenAI/Anthropic responses
 
 All examples must pass without errors.
+
+## Public Repository Policy
+
+This repository ships to TruLayer customers. Do not introduce references to internal code, internal repositories (e.g. the TruLayer API service or dashboard), internal planning documents, internal Linear issue content, or internal architectural details. Refer to the platform as "TruLayer" or "the TruLayer API" — not as specific internal components. If in doubt, leave it out.

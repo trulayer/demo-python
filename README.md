@@ -1,7 +1,7 @@
 # TruLayer AI — Python Demos
 
 Runnable, end-to-end Python examples that show how to trace AI
-applications with the [`trulayer`](../client-python) SDK. Every example
+applications with the [`trulayer`](https://pypi.org/project/trulayer/) SDK. Every example
 emits real traces and spans; the final `feedback.py` demo also posts
 user feedback against a trace.
 
@@ -19,7 +19,7 @@ Set in `.env` at minimum:
 ```
 TRULAYER_API_KEY=tl_...
 TRULAYER_PROJECT_NAME=my-project
-TRULAYER_ENDPOINT=https://api.trulayer.ai   # or http://127.0.0.1:8080 for local dev
+TRULAYER_ENDPOINT=https://api.trulayer.ai
 OPENAI_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
 ```
