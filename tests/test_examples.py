@@ -49,6 +49,7 @@ def _run(module_name: str) -> Any:
         ("rag_pipeline", {"demo", "rag"}),
         ("agent", {"demo", "agent"}),
         ("langchain_chain", {"demo", "langchain"}),
+        ("async_example", {"demo", "async"}),
     ],
 )
 def test_example_emits_trace(
@@ -101,6 +102,22 @@ def test_agent_emits_tool_spans(mock_url: str, monkeypatch: pytest.MonkeyPatch) 
     span_types = {s["span_type"] for tr in traces for s in tr["spans"]}
     assert "tool" in span_types, f"expected at least one tool span, got {span_types}"
     assert "llm" in span_types
+
+
+def test_async_example_has_concurrent_spans(
+    mock_url: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The async example should produce two LLM spans from concurrent tasks."""
+    monkeypatch.setenv("TRULAYER_ENDPOINT", mock_url)
+
+    _run("async_example")
+    traces = _all_traces(mock_server.get_received())
+    assert traces, "async_example emitted no traces"
+
+    span_names = [s["name"] for s in traces[0]["spans"]]
+    assert "ask-nyc" in span_names, f"missing ask-nyc span, got {span_names}"
+    assert "ask-london" in span_names, f"missing ask-london span, got {span_names}"
+    assert all(s["span_type"] == "llm" for s in traces[0]["spans"])
 
 
 def test_rag_pipeline_has_three_stage_shape(
