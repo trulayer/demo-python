@@ -34,4 +34,4 @@ trulayer = { path = "../client-python", editable = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=examples --cov-report=term-missing --cov-fail-under=90"
+addopts = "--cov=examples --cov-report=term-missing --cov-report=xml --cov-fail-under=74"

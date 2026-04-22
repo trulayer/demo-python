@@ -50,6 +50,13 @@ jobs:
         env:
           TRULAYER_DRY_RUN: "true"
         run: uv run pytest
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: demo-python/coverage.xml
+          flags: demo-python
+          fail_ci_if_error: false
 
   ci:
     name: ci
