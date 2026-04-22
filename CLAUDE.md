@@ -11,6 +11,20 @@ End-to-end runnable Python examples demonstrating TruLayer AI SDK integration. U
 - `trulayer` — the TruLayer Python SDK (from `client-python`)
 - `openai`, `anthropic`, `langchain` — AI providers
 
+## Merge Conflict Policy
+
+**Merge conflicts are the engineer's responsibility.** Before opening a PR (and again before merging), rebase onto the latest `main` and resolve all conflicts:
+
+```bash
+git fetch origin && git rebase origin/main
+```
+
+Do not open a PR with a conflicting branch. If a conflict arises after the PR is open because `main` moved, the PR author owns the rebase — not the reviewer or TPM.
+
+## Branch Management
+
+**Delete the feature branch after the PR is squash-merged.** Run `git push origin --delete <branch-name>` or click "Delete branch" in the GitHub UI immediately after merge. Merged branches are noise — clean them up every time, not in periodic sweeps.
+
 ## Key Commands
 
 ```bash
