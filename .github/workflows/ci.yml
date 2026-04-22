@@ -43,11 +43,11 @@ jobs:
         working-directory: demo-python
         run: uv sync --dev
 
-      - name: Run smoke tests (dry-run mode)
+      - name: Run smoke tests with coverage (dry-run mode)
         working-directory: demo-python
         env:
           TRULAYER_DRY_RUN: "true"
-        run: uv run pytest tests/
+        run: uv run pytest
 
   ci:
     name: ci

@@ -17,6 +17,7 @@ dependencies = [
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
+    "pytest-cov>=5.0.0",
     "python-dotenv>=1.0.0",
 ]
 
@@ -24,6 +25,7 @@ dev = [
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
+    "pytest-cov>=5.0.0",
     "python-dotenv>=1.0.0",
 ]
 
@@ -32,3 +34,4 @@ trulayer = { path = "../client-python", editable = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--cov=examples --cov-report=term-missing --cov-fail-under=90"
