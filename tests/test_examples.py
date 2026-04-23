@@ -99,7 +99,7 @@ def test_agent_emits_tool_spans(mock_url: str, monkeypatch: pytest.MonkeyPatch) 
     traces = _all_traces(mock_server.get_received())
     assert traces, "agent emitted no traces"
 
-    span_types = {s["span_type"] for tr in traces for s in tr["spans"]}
+    span_types = {s["type"] for tr in traces for s in tr["spans"]}
     assert "tool" in span_types, f"expected at least one tool span, got {span_types}"
     assert "llm" in span_types
 
@@ -117,7 +117,7 @@ def test_async_example_has_concurrent_spans(
     span_names = [s["name"] for s in traces[0]["spans"]]
     assert "ask-nyc" in span_names, f"missing ask-nyc span, got {span_names}"
     assert "ask-london" in span_names, f"missing ask-london span, got {span_names}"
-    assert all(s["span_type"] == "llm" for s in traces[0]["spans"])
+    assert all(s["type"] == "llm" for s in traces[0]["spans"])
 
 
 def test_rag_pipeline_has_three_stage_shape(
