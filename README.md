@@ -1,5 +1,7 @@
 # TruLayer AI — Python Demos
 
+[![codecov](https://codecov.io/gh/trulayer/demo-python/graph/badge.svg?token=0DUO77L7OZ)](https://codecov.io/gh/trulayer/demo-python)
+
 Runnable, end-to-end Python examples that show how to trace AI
 applications with the [`trulayer`](https://pypi.org/project/trulayer/) SDK. Every example
 emits real traces and spans; the final `feedback.py` demo also posts
