@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out demo-python
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: demo-python
 
@@ -25,19 +25,19 @@ jobs:
       # is on PyPI, drop this step and switch `pyproject.toml` to a version
       # specifier.
       - name: Check out client-python (SDK source)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: trulayer/client-python
           path: client-python
           token: ${{ secrets.CLIENT_PYTHON_TOKEN }}
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v4
+        uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
 
