@@ -7,7 +7,6 @@ required. Tests are deterministic and offline.
 from __future__ import annotations
 
 import importlib
-import os
 from typing import Any
 
 import pytest
