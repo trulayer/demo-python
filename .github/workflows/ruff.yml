@@ -1,0 +1,13 @@
+name: ruff
+# PR-only. Repo already ships a ruff config (pyproject.toml); full check is safe here.
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/ruff-action@v3
